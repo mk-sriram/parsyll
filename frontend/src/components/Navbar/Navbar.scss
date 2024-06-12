@@ -1,0 +1,80 @@
+@import "../../responsive.scss";
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 40px;
+  margin: 20px;
+  background-color: #ffffff13;
+  
+
+  a {
+    text-decoration: none;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    &:hover {
+      scale: 1.05;
+      //font size would move the divs around
+    }
+  }
+  .left {
+    flex: 3;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+
+    .logo {
+      font-weight: bold;
+      font-size: 25px;
+      display: flex;
+      align-items: center; //the text and the logo vertical alginment
+      //div elements vertically centered
+      gap: 10px;
+
+      img {
+        width: 30px;
+      }
+
+      span {
+        @include md {
+          display: none;
+        }
+        @include sm {
+          display: initial;
+        }
+      }
+    }
+  }
+  .right {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+
+    @include md {
+      background-color: transparent;
+    }
+    a {
+      padding: 12px 24px;
+      margin: 20px;
+      font-size: 20px;
+    }
+
+    .signin {
+      background-color: #142349;
+      border-radius: 50px;
+      color: white;
+      &:hover {
+        background-color: #1d3268;
+      }
+      &:active {
+        background-color: #21387574;
+      }
+    }
+  }
+}

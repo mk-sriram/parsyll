@@ -1,0 +1,54 @@
+body {
+  background-image: url("../../assets/background.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.main-container {
+  background-color: white;
+}
+
+.maincontainer {
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+  padding-left: 60px;
+  padding-top: 150px;
+  height: 100vh;
+  color: #000; /* Adjust the text color as needed */
+  flex-direction: column; /* Ensure content is stacked vertically */
+  text-align: left;
+
+  h1 {
+    font-size: 50px;
+  }
+  
+  .google-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: #fff;
+    color: rgba(25, 25, 25, 0.95);
+    padding: 5px 30px;
+    margin-top: 30px;
+    border: none;
+    border-radius: 31px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .google-btn img {
+    margin-right: 5px;
+    height: 40px;
+  }
+
+  .google-btn:hover {
+    background-color: #f7f7f7;
+    border-color: #dce6ff;
+    scale: 1.02;
+  }
+
+}
