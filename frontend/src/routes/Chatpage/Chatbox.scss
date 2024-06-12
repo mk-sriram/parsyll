@@ -72,52 +72,15 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-}
-
-.send-to-calendar-button {
-  background-color: #004085;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  margin-top: 10px;
-  align-self: center;
-  cursor: pointer;
-}
-
-.send-to-calendar-button {
-  background-color: #004085;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  margin-top: 10px;
-  align-self: center;
-  cursor: pointer;
-}
-
-.send-calendar-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.send-to-calendar-button {
-  background-color: #004085;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  margin-top: 10px;
-  align-self: center;
-  cursor: pointer;
   
+  &:hover {
+    background-color: #0056b3;
+    scale: 1.03;
+  }
 }
 
-.send-to-calendar-button:hover,
-.chatbot-send-button:hover {
-  background-color: #0056b3;
-}
+
+
+
 
 

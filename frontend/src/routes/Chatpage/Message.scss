@@ -1,0 +1,22 @@
+.message-container {
+  display: flex;
+  background-color: red;
+  
+  justify-content: end;  //start for bot, end for user 
+  gap: 10px;
+  margin: 10px 5px;
+
+  //   .message-user {
+  //     height: 30px;
+  //     width: 30px;
+  //     margin-top: 15px;
+  //   }
+  .message-text {
+    width: 500px;
+    padding: 20px 20px;
+    border-radius: 31px;
+    background-color: #142349;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}

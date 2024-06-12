@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import "./Chatbox.scss"
+import Message from './Message.jsx';
 
 
 const Chatbox = () => {
@@ -32,7 +33,7 @@ const Chatbox = () => {
         <div className="chatbot-header"></div>
         <div className="chatbot-messages">
           {/* MESSAGES GO INSIDE HERE, script to add messags ( map and then make divs ) */}
-          
+          <Message/>
         </div>
         <div className="chatbot-input-bi">
           <div className="chatbot-input-container">
@@ -47,10 +48,6 @@ const Chatbox = () => {
           <button className="chatbot-send-button" onClick={sendMessage}>
             &#x27A4;
           </button>
-        </div>
-        <div className="send-calendar-container">
-          <button className="send-to-calendar-button">Send to Calendar</button>
-          <div class="loader"></div>
         </div>
       </div>
     </div>
