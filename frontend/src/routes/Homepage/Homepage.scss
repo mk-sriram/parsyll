@@ -2,7 +2,7 @@
   display: flex;
   background-image: url("../../assets/background.webp");
   background-position: center;
-  
+  height: 80vh;
 }
 .text-container {
   //background-color: aqua;
@@ -19,7 +19,7 @@
   h1 {
     font-size: 50px;
   }
-  
+
   .google-btn {
     display: inline-flex;
     align-items: center;
@@ -48,8 +48,32 @@
     scale: 1.02;
   }
 
+  .uploadfiles-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: #142349;
+    color: rgb(255, 255, 255);
+    padding: 10px 40px;
+    margin-top: 30px;
+    border: none;
+    border-radius: 31px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: #1d3268;
+      scale: 1.03;
+    }
+    &:active {
+      background-color: #21387574;
+    }
+  }
 }
 
-.image-container{
-  background-color: #dce6ff ;
+.image-container {
+  background-color: #dce6ff;
 }

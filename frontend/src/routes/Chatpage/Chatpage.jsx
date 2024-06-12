@@ -1,9 +1,10 @@
 import React from 'react'
 import "./Chatpage.scss"
+import Chatbox from './Chatbox'
 const Chatpage = () => {
   return (
-    <div>
-      CHATPAGE
+    <div className='chatpage'>
+       <Chatbox/>
     </div>
   )
 }

@@ -9,10 +9,10 @@ const layout = () => {
   return (
     <div className="layout">
       <div className="navbar">
-        <Navbar signedIn={true}/>
+        <Navbar signedIn={false} />
       </div>
       <div className="content">
-        <Outlet />
+        <Outlet  />
       </div>
     </div>
   );

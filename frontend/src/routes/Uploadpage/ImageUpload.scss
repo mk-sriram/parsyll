@@ -1,0 +1,97 @@
+/* styles.css */
+.drag-and-drop-area {
+    background-color: white;
+  width: 600px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #14234979;
+  border-radius: 31px;
+  padding: 20px;
+  text-align: center;
+  transition: background-color 0.3s;
+  cursor: pointer;
+
+  &:hover{
+    background-color: #f3f3f3;
+  }
+  &.drag-over {
+    background-color: #f3f3f3;
+  }
+
+
+  .upload-icon {
+    height: 30px;
+  }
+
+  p {
+    margin: 10px 0;
+    font-size: 20px;
+    color: #142349;
+  }
+}
+
+.upload-details {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  padding: 10px 50px;
+  background-color: #142349;
+  border-radius: 31px;
+  justify-content: space-between;
+  
+
+  .cancel-icon {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 30px;
+    border-radius: 50px;
+    overflow: hidden;
+    cursor: pointer;
+
+    transition: all 0.2 ease;
+    &:hover {
+      scale: 1.02;
+    }
+
+    .cancel-icon-img {
+      width: 40%;
+      object-fit: contain;
+
+      &:hover {
+        scale: 1.02;
+      }
+    }
+  }
+}
+
+.upload-details p {
+  padding: 10px;
+  margin: 0;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-bar div {
+  height: 100%;
+  background-color: #142349;
+  transition: width 0.3s;
+}
+
+.error {
+  color: red;
+}

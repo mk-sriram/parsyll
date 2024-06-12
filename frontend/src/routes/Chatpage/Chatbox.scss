@@ -1,0 +1,123 @@
+/* Chatbot.css */
+
+
+.chatbot-container {
+  width: 800px;
+  height: 600px;
+  background-color: #f0f4f8;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chatbot-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.chatbot-icon {
+  width: 40px;
+  height: 40px;
+  background: url('../assets/images/icon.png') no-repeat center center;
+  background-size: contain;
+}
+
+.chatbot-messages {
+  flex-grow: 1;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.chatbot-input-container {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  background-color: white;
+  padding: 5px;
+  flex-grow: 1;
+}
+
+.chatbot-input-bi {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  background-color: white;
+  padding: 5px;
+}
+
+.chatbot-input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.chatbot-send-button {
+  background-color: #004085;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.send-to-calendar-button {
+  background-color: #004085;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  align-self: center;
+  cursor: pointer;
+}
+
+.send-to-calendar-button {
+  background-color: #004085;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  align-self: center;
+  cursor: pointer;
+}
+
+.send-calendar-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.send-to-calendar-button {
+  background-color: #004085;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  align-self: center;
+  cursor: pointer;
+  
+}
+
+.send-to-calendar-button:hover,
+.chatbot-send-button:hover {
+  background-color: #0056b3;
+}
+
+
