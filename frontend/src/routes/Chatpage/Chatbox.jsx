@@ -33,7 +33,8 @@ const Chatbox = () => {
         <div className="chatbot-header"></div>
         <div className="chatbot-messages">
           {/* MESSAGES GO INSIDE HERE, script to add messags ( map and then make divs ) */}
-          <Message/>
+          <Message bot={true} text={"I'M a BOT"}/>
+          <Message bot={false} text={ "I'M the USER"}/>
         </div>
         <div className="chatbot-input-bi">
           <div className="chatbot-input-container">

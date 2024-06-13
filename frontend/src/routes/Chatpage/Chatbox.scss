@@ -1,6 +1,5 @@
 /* Chatbot.css */
 
-
 .chatbot-container {
   width: 800px;
   height: 600px;
@@ -22,7 +21,7 @@
 .chatbot-icon {
   width: 40px;
   height: 40px;
-  background: url('../assets/images/icon.png') no-repeat center center;
+  background: url("../assets/images/icon.png") no-repeat center center;
   background-size: contain;
 }
 
@@ -62,7 +61,7 @@
 }
 
 .chatbot-send-button {
-  background-color: #004085;
+  background-color: #142349;
   color: white;
   border: none;
   border-radius: 50%;
@@ -72,15 +71,9 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  
+
   &:hover {
-    background-color: #0056b3;
+    background-color: #1d3268;
     scale: 1.03;
   }
 }
-
-
-
-
-
-

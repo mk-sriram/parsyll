@@ -1,8 +1,9 @@
-.message-container {
+.message-container-bot {
   display: flex;
-  background-color: red;
-  
-  justify-content: end;  //start for bot, end for user 
+  //background-color: red;
+
+  justify-content: start; //start for bot, end for user
+
   gap: 10px;
   margin: 10px 5px;
 
@@ -11,12 +12,36 @@
   //     width: 30px;
   //     margin-top: 15px;
   //   }
-  .message-text {
-    width: 500px;
+  .message-text-bot {
+    width: fit-content;
+    max-width: 500px;
     padding: 20px 20px;
     border-radius: 31px;
     background-color: #142349;
     color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+.message-container-user {
+  display: flex;
+  //background-color: red;
+  justify-content: end; //start for bot, end for user
+  gap: 10px;
+  margin: 10px 5px;
+
+  //   .message-user {
+  //     height: 30px;
+  //     width: 30px;
+  //     margin-top: 15px;
+  //   }
+
+  .message-text-user {
+    width: fit-content;
+    max-width: 500px;
+    padding: 20px 20px;
+    border-radius: 31px;
+    background-color: #f0f4f8;
+    color: #142349;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 }
