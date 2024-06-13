@@ -7,7 +7,7 @@ const Chatpage = () => {
       <Chatbox />
       <div className="send-calendar-container">
         <button className="send-to-calendar-button">Send to Calendar</button>
-        <div class="loader"></div>
+        <div className="loader"></div>
       </div>
     </div>
   );

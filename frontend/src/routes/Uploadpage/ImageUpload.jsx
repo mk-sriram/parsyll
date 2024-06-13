@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react";
+import axios from "axios"; // Ensure axios is imported
 import "./ImageUpload.scss";
 import assets from "../../assets";
-import axios from "axios"; // Ensure axios is imported
+import { useNavigate } from "react-router-dom";
 
-const ImageUpload = () => {
+const ImageUpload = ({ name, size, getUrl, error }) => {
   const [dragOver, setDragOver] = useState(false);
   const [files, setFiles] = useState([]);
   const [progress, setProgress] = useState({});
@@ -13,11 +14,15 @@ const ImageUpload = () => {
   const [serverError, setServerError] = useState(false);
 
   const fileInputRef = useRef(null);
+  const navigate = useNavigate();
 
+  const redirectChatpage = () => {
+    navigate("/chat");
+  };
   const handleDragOver = (event) => {
     event.preventDefault();
     if (!isLoading) {
-      setDragOver(true); //prevents file drop during upload
+      setDragOver(true);
     }
   };
 
@@ -32,74 +37,63 @@ const ImageUpload = () => {
       setProcessingError(false);
 
       const droppedFiles = event.dataTransfer.files;
-      const validFiles = [];
-      const invalidFiles = [];
-
-      for (let i = 0; i < droppedFiles.length; i++) {
-        const file = droppedFiles[i];
-        if (
-          file.type === "application/pdf" ||
-          file.type === "image/jpeg" ||
-          file.type ===
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-          file.type === "image/png"
-        ) {
-          validFiles.push(file);
-        } else {
-          invalidFiles.push(file);
-        }
-      }
-
-      if (invalidFiles.length > 0) {
-        setProcessingError(true);
-      }
-
-      if (validFiles.length > 0) {
-        setFiles((prevFiles) => [...prevFiles, ...validFiles]);
-        setUploadFileError(false);
-      }
+      processFiles(droppedFiles);
     }
   };
 
-  const uploadFile = (file) => {
-    console.log("upload file function running ");
-    setIsLoading(true);
-    setProcessingError(false);
+  const handleFileSelect = (event) => {
+    if (!isLoading) {
+      const selectedFiles = event.target.files;
+      processFiles(selectedFiles);
+    }
+  };
 
-    // Simulate file upload and progress
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setIsLoading(false);
-          return 100;
-        }
-        return prev + 10;
-      });
-    }, 200);
+  const processFiles = (selectedFiles) => {
+    const validFiles = [];
+    const invalidFiles = [];
+
+    for (let i = 0; i < selectedFiles.length; i++) {
+      const file = selectedFiles[i];
+      if (
+        file.type === "application/pdf" ||
+        file.type === "image/jpeg" ||
+        file.type ===
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+        file.type === "image/png"
+      ) {
+        validFiles.push(file);
+      } else {
+        invalidFiles.push(file);
+      }
+    }
+
+    if (invalidFiles.length > 0) {
+      setProcessingError(true);
+    }
+
+    if (validFiles.length > 0) {
+      setFiles((prevFiles) => [...prevFiles, ...validFiles]);
+      setUploadFileError(false);
+      //validFiles.forEach((file) => uploadFile(file));
+    }
   };
 
   const fileUpload = async () => {
-    console.log("file upload function runnning");
     if (files.length === 0) {
       setUploadFileError(true);
       return;
     }
-    setServerError(false);
-    setUploadFileError(false);
-    setFileStatus(false);
 
-    console.log("no error with file upload");
-
+    setIsLoading(true);
     setProcessingError(false);
+    setUploadFileError(false);
+    setServerError(false);
 
     const formData = new FormData();
     files.forEach((file) => {
-      //for each
       formData.append("files", file);
     });
 
-    console.log("form data works");
     try {
       const response = await axios.post(
         "http://localhost:3000/upload",
@@ -111,42 +105,34 @@ const ImageUpload = () => {
         }
       );
 
-      console.log("File uploaded successfully:", response.data);
+      console.log("Files uploaded successfully:", response.data);
+
+      setIsLoading(false);
+      setProgress({});
+
+      //redirectNavigatio
+      redirectChatpage();
     } catch (error) {
-      console.error("Error: ", error);
+      console.error("Error:", error);
       setServerError(true);
+      setIsLoading(false);
     }
   };
 
-  const handleFileSelect = (event) => {
-    const files = event.target.files;
-    if (files && files.length) {
-      const selectedFile = files[0];
-      if (
-        selectedFile.type === "application/pdf" ||
-        selectedFile.type === "image/jpeg" ||
-        selectedFile.type ===
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-        selectedFile.type === "image/png"
-      ) {
-        setFiles(selectedFile);
-        uploadFile(selectedFile);
-      } else {
-        setProcessingError(true);
-      }
-    }
-  };
-
-  const removeFile = (event) => {
-    event.stopPropagation(); // prevents the parent div functionality
-    setFiles(null);
-    setProgress(0);
+  const removeFile = (event, fileToRemove) => {
+    event.stopPropagation();
+    setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToRemove));
+    setProgress((prevProgress) => {
+      const newProgress = { ...prevProgress };
+      delete newProgress[fileToRemove.name];
+      return newProgress;
+    });
     setIsLoading(false);
     setProcessingError(false);
-
-    //remove from the database as well ??
+    setUploadFileError(false);
+    setServerError(false);
   };
-
+  
   return (
     <div className="drag-drop-with-btn">
       <div
@@ -192,23 +178,19 @@ const ImageUpload = () => {
             ))}
           </div>
         )}
-
         {isLoading && (
           <div className="progress-bar">
-            <div style={{ width: `${progress}%` }}></div>
+            <div style={{ width: `${progress.total || 0}%` }}></div>
           </div>
         )}
-        {processingError && <p className="error">Error uploading file</p>}
+        {processingError && <p className="error">Invalid file type selected</p>}
       </div>
-      <button onClick={fileUpload} className="upload-btn">
+      <button onClick={fileUpload} className="upload-btn" disabled={isLoading}>
         Analyze
       </button>
       <div className="error-msg">
-        {uploadFileError && <p className="error">No file Detected!!!</p>}
-        {serverError && (
-          <p className="error">Error uploading file to server!!!</p>
-        )}
-        {fileStatus && <p className="success">File Uploaded Successfully!!!</p>}
+        {uploadFileError && <p className="error">No file detected</p>}
+        {serverError && <p className="error">Error uploading file to server</p>}
       </div>
     </div>
   );
