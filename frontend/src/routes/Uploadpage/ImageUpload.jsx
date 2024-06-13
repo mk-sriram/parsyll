@@ -5,66 +5,99 @@ import axios from "axios"; // Ensure axios is imported
 
 const ImageUpload = () => {
   const [dragOver, setDragOver] = useState(false);
-  const [file, setFile] = useState(null);
-  const [progress, setProgress] = useState(0);
+  const [files, setFiles] = useState([]);
+  const [progress, setProgress] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [processingError, setProcessingError] = useState(false);
   const [uploadFileError, setUploadFileError] = useState(false);
   const [serverError, setServerError] = useState(false);
-  const [fileStatus, setFileStatus] = useState(false);
 
   const fileInputRef = useRef(null);
 
   const handleDragOver = (event) => {
     event.preventDefault();
-    setDragOver(true);
+    if (!isLoading) {
+      setDragOver(true); //prevents file drop during upload
+    }
   };
 
   const handleDragLeave = () => {
     setDragOver(false);
   };
-  
+
   const handleDrop = (event) => {
     event.preventDefault();
-    setDragOver(false);
-    setProcessingError(false);
+    if (!isLoading) {
+      setDragOver(false);
+      setProcessingError(false);
 
-    const files = event.dataTransfer.files;
-    if (files && files.length) {
-      const uploadedFile = files[0];
-      if (
-        uploadedFile.type === "application/pdf" ||
-        uploadedFile.type === "image/jpeg" ||
-        uploadedFile.type ===
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-        uploadedFile.type === "image/png"
-      ) {
-        setFile(uploadedFile);
-        uploadFile(uploadedFile);
-      } else {
+      const droppedFiles = event.dataTransfer.files;
+      const validFiles = [];
+      const invalidFiles = [];
+
+      for (let i = 0; i < droppedFiles.length; i++) {
+        const file = droppedFiles[i];
+        if (
+          file.type === "application/pdf" ||
+          file.type === "image/jpeg" ||
+          file.type ===
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+          file.type === "image/png"
+        ) {
+          validFiles.push(file);
+        } else {
+          invalidFiles.push(file);
+        }
+      }
+
+      if (invalidFiles.length > 0) {
         setProcessingError(true);
+      }
+
+      if (validFiles.length > 0) {
+        setFiles((prevFiles) => [...prevFiles, ...validFiles]);
+        setUploadFileError(false);
       }
     }
   };
 
-  
+  const uploadFile = (file) => {
+    console.log("upload file function running ");
+    setIsLoading(true);
+    setProcessingError(false);
+
+    // Simulate file upload and progress
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setIsLoading(false);
+          return 100;
+        }
+        return prev + 10;
+      });
+    }, 200);
+  };
 
   const fileUpload = async () => {
+    console.log("file upload function runnning");
+    if (files.length === 0) {
+      setUploadFileError(true);
+      return;
+    }
     setServerError(false);
     setUploadFileError(false);
     setFileStatus(false);
-    console.log();
-    //console.log("file upload function runnning")
-    if (!file) {
-      uploadFileError(true);
-      return;
-    }
-    //console.log("no error with file upload");
+
+    console.log("no error with file upload");
 
     setProcessingError(false);
 
     const formData = new FormData();
-    formData.append("file", file);
+    files.forEach((file) => {
+      //for each
+      formData.append("files", file);
+    });
 
     console.log("form data works");
     try {
@@ -96,7 +129,7 @@ const ImageUpload = () => {
           "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
         selectedFile.type === "image/png"
       ) {
-        setFile(selectedFile);
+        setFiles(selectedFile);
         uploadFile(selectedFile);
       } else {
         setProcessingError(true);
@@ -106,7 +139,7 @@ const ImageUpload = () => {
 
   const removeFile = (event) => {
     event.stopPropagation(); // prevents the parent div functionality
-    setFile(null);
+    setFiles(null);
     setProgress(0);
     setIsLoading(false);
     setProcessingError(false);
@@ -121,13 +154,15 @@ const ImageUpload = () => {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        onClick={() => fileInputRef.current.click()}
+        onClick={() => !isLoading && fileInputRef.current.click()}
       >
         <input
           ref={fileInputRef}
           type="file"
           style={{ display: "none" }}
           onChange={handleFileSelect}
+          disabled={isLoading}
+          multiple
         />
         <div>
           <img
@@ -136,20 +171,28 @@ const ImageUpload = () => {
             alt="upload-icon"
           />
         </div>
-        <p>Drag and drop a file here, or click to select a file</p>
-        {file && (
+        <p>Drag and drop files here, or click to select files</p>
+        {files.length > 0 && (
           <div className="upload-details">
-            <div className="cancel-icon" onClick={removeFile}>
-              <img
-                className="cancel-icon-img"
-                src={assets.cancelicon}
-                alt="cancel-icon-img"
-              />
-            </div>
-            <p>{file.name}</p>
-            <p>{(file.size / 1000).toFixed(0)} KB</p>
+            {files.map((file, index) => (
+              <div key={index} className="file-details">
+                <div
+                  className="cancel-icon"
+                  onClick={(event) => removeFile(event, file)}
+                >
+                  <img
+                    className="cancel-icon-img"
+                    src={assets.cancelicon}
+                    alt="cancel-icon-img"
+                  />
+                </div>
+                <p>{file.name}</p>
+                <p>{(file.size / 1000).toFixed(0)} KB</p>
+              </div>
+            ))}
           </div>
         )}
+
         {isLoading && (
           <div className="progress-bar">
             <div style={{ width: `${progress}%` }}></div>
