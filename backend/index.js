@@ -1,40 +1,21 @@
-// import express from "express"
-// import dotenv from "dotenv"
-// import cors from "cors"
-// dotenv.config(); 
+//Module imports 
+import express from "express"
+import dotenv from "dotenv"
+import cors from "cors"
 
-// const app = express(); 
-// const PORT = process.env.PORT || 3000;
-// app.use(express.json()); 
-// app.use(cors())
+dotenv.config(); 
 
-// app.get("/", (request, response) => { 
-//     response.send("HELLOW WORLD");
-// });
+const app = express(); 
+const PORT = process.env.PORT || 3000;
 
-// app.listen(PORT, ()=>{
-//     console.log(`Server is running on ${PORT}`)
-// })
+//middleware 
+app.use(express.json()); 
+app.use(cors())
 
-import OpenAI from "openai";
-import dotenv from "dotenv";
-import axios from "axios";
-import axiosRateLimit from "axios-rate-limit";
-//router configuration and middleware
-dotenv.config();
-//
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
+app.get("/", (request, response) => { 
+    response.send("HELLOW WORLD");
 });
 
-async function chatComplete(){
-  const completion = await openai.chat.completions.create({
-    messages: [{ role: "system", content: "Ansewer in just one word." }, {role:"user", content: " What is the capital USA"}],
-    model: "gpt-3.5-turbo",
-  });
-
-  console.log(completion);
-};
-
-chatComplete(); 
+app.listen(PORT, ()=>{
+    console.log(`Server is running on ${PORT}`)
+})

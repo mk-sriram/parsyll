@@ -1,32 +1,32 @@
-//Module imports 
+//Module imports
 import { Router } from "express";
-import { Configuration , OpenAIApi } from 'openai'
-import dotenv from 'dotenv'
+import cors from "cors";
+import { Configuration, OpenAIApi } from "openai";
+import dotenv from "dotenv";
+import axios from "axios";
+import OpenAI from "openai";
 
-//router configuration and middleware 
-dotenv.config(); 
-const router = Router(); 
+//router configuration and middleware
+dotenv.config();
+const router = Router();
 
-//openAI 
-const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY
-}); 
-const openai = new OpenAIApi(configuration); 
+//OPEN init
 
-const chatComplete = async ()=>{
-    const chatCompletetion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo-0125",
-      messages : [
-        {role: 'user', content: "what is the campital of usa"}
-      ]
+const openai = new OpenAI();
+
+router.post("/chat", async (request, response) => {
+  const { messages } = request.body;
+  try {
+    const completion = await openai.chat.completions.create({
+      messages: messages,
+      model: "gpt-3.5-turbo-16k",
     });
+    console.log(completion.choices[0]);
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ error: "Error, try again!" });
+  }
+});
 
-    console.log(chatCompletetion); 
-}
-
-//routes 
-router.post('/')
-
-
-//export 
-export default router; 
+//export
+export default router;

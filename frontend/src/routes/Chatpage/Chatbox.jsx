@@ -1,30 +1,42 @@
-import React,{useState} from 'react'
-import "./Chatbox.scss"
-import Message from './Message.jsx';
-
+import React, { useState } from "react";
+import "./Chatbox.scss";
+import Message from "./Message.jsx";
+import OpenAI from "openai";
+import dotenv from "dotenv";
+dotenv.config();
 
 const Chatbox = () => {
   const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([
+    { role: "Assistant", message: "I'M a BOT" },
+    //messages would be the inital output from CHATGPT
+  ]);
 
   const sendMessage = async () => {
-    // console.log(message);
-    // try {
-    //   const response = await fetch("http://localhost:3000/chatpage", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ message }),
-    //   });
+    if (!message.trim()) return; // Prevent sending empty messages
 
-    //   if (!response.ok) {
-    //     throw new Error("Network response was not ok ");
-    //   }
-    //   const data = await response.json();
-    //   console.log("Success:", data);
-    // } catch (error) {
-    //   console.error("Error: ", error);
-    // }
+    const userMessage = { role: "user", content: message };
+
+    setMessages([...messages, userMessage]);
+
+    try {
+      const response = await axios.post("http://localhost:3000/chat", {
+        message,
+      });
+
+      const botMessage = {
+        role: "assistant",
+        content: response.data.botMessage,
+      };
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
+    } catch (error) {
+      console.error("Error: ", error);
+      const errorMessage = {
+        role: "assistant",
+        content: "Error: Could not get response from the server.",
+      };
+      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+    }
   };
 
   return (
@@ -32,9 +44,10 @@ const Chatbox = () => {
       <div className="chatbot-container">
         <div className="chatbot-header"></div>
         <div className="chatbot-messages">
-          {/* MESSAGES GO INSIDE HERE, script to add messags ( map and then make divs ) */}
-          <Message bot={true} text={"I'M a BOT"}/>
-          <Message bot={false} text={ "I'M the USER"}/>
+          {/* Message go here  */}
+          {messages.map((msg, index) => (
+            <Message key={index} role={msg.role} message={msg.message} />
+          ))}
         </div>
         <div className="chatbot-input-bi">
           <div className="chatbot-input-container">
@@ -55,4 +68,4 @@ const Chatbox = () => {
   );
 };
 
-export default Chatbox
+export default Chatbox;
