@@ -5,7 +5,7 @@ const Uploadpage = () => {
   return (
     <div className="uploadpage">
       <ImageUpload />
-       <button className="upload-btn">Analyze</button>
+       
     </div>
   );
 };

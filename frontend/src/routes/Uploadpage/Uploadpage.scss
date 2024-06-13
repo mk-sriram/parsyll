@@ -6,27 +6,4 @@ display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
-  .upload-btn {
-    
-    color: white;
-    font-size: 20px;
-    padding: 10px 40px;
-    margin-top: 20px;
-    border-style: none;
-    
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    background-color: #142349;
-    border-radius: 50px;
-    color: white;
-    &:hover {
-      background-color: #1d3268;
-      scale: 1.03;
-    }
-    &:active {
-      background-color: #21387574;
-    }
-  }
 }

@@ -1,13 +1,17 @@
 import React, { useState, useRef } from "react";
 import "./ImageUpload.scss";
 import assets from "../../assets";
+import axios from "axios"; // Ensure axios is imported
 
-const ImageUpload = ({ name, size, getUrl, error }) => {
+const ImageUpload = () => {
   const [dragOver, setDragOver] = useState(false);
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [processingError, setProcessingError] = useState(false);
+  const [uploadFileError, setUploadFileError] = useState(false);
+  const [serverError, setServerError] = useState(false);
+  const [fileStatus, setFileStatus] = useState(false);
 
   const fileInputRef = useRef(null);
 
@@ -19,15 +23,22 @@ const ImageUpload = ({ name, size, getUrl, error }) => {
   const handleDragLeave = () => {
     setDragOver(false);
   };
-
+  
   const handleDrop = (event) => {
     event.preventDefault();
     setDragOver(false);
+    setProcessingError(false);
 
     const files = event.dataTransfer.files;
     if (files && files.length) {
       const uploadedFile = files[0];
-      if (uploadedFile.type === "application/pdf") {
+      if (
+        uploadedFile.type === "application/pdf" ||
+        uploadedFile.type === "image/jpeg" ||
+        uploadedFile.type ===
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+        uploadedFile.type === "image/png"
+      ) {
         setFile(uploadedFile);
         uploadFile(uploadedFile);
       } else {
@@ -36,21 +47,42 @@ const ImageUpload = ({ name, size, getUrl, error }) => {
     }
   };
 
-  const uploadFile = (file) => {
-    setIsLoading(true);
+  
+
+  const fileUpload = async () => {
+    setServerError(false);
+    setUploadFileError(false);
+    setFileStatus(false);
+    console.log();
+    //console.log("file upload function runnning")
+    if (!file) {
+      uploadFileError(true);
+      return;
+    }
+    //console.log("no error with file upload");
+
     setProcessingError(false);
 
-    // Simulate file upload and progress
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setIsLoading(false);
-          return 100;
+    const formData = new FormData();
+    formData.append("file", file);
+
+    console.log("form data works");
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-        return prev + 10;
-      });
-    }, 200);
+      );
+
+      console.log("File uploaded successfully:", response.data);
+    } catch (error) {
+      console.error("Error: ", error);
+      setServerError(true);
+    }
   };
 
   const handleFileSelect = (event) => {
@@ -78,49 +110,63 @@ const ImageUpload = ({ name, size, getUrl, error }) => {
     setProgress(0);
     setIsLoading(false);
     setProcessingError(false);
+
+    //remove from the database as well ??
   };
 
   return (
-    <div
-      className={`drag-and-drop-area ${dragOver ? "drag-over" : ""}`}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
-      onClick={() => fileInputRef.current.click()}
-    >
-      <input
-        ref={fileInputRef}
-        type="file"
-        style={{ display: "none" }}
-        onChange={handleFileSelect}
-      />
-      <div>
-        <img
-          className="upload-icon"
-          src={assets.fileupload}
-          alt="upload-icon"
+    <div className="drag-drop-with-btn">
+      <div
+        className={`drag-and-drop-area ${dragOver ? "drag-over" : ""}`}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        onClick={() => fileInputRef.current.click()}
+      >
+        <input
+          ref={fileInputRef}
+          type="file"
+          style={{ display: "none" }}
+          onChange={handleFileSelect}
         />
-      </div>
-      <p>Drag and drop a file here, or click to select a file</p>
-      {file && (
-        <div className="upload-details">
-          <div className="cancel-icon" onClick={removeFile}>
-            <img
-              className="cancel-icon-img"
-              src={assets.cancelicon}
-              alt="cancel-icon-img"
-            />
+        <div>
+          <img
+            className="upload-icon"
+            src={assets.fileupload}
+            alt="upload-icon"
+          />
+        </div>
+        <p>Drag and drop a file here, or click to select a file</p>
+        {file && (
+          <div className="upload-details">
+            <div className="cancel-icon" onClick={removeFile}>
+              <img
+                className="cancel-icon-img"
+                src={assets.cancelicon}
+                alt="cancel-icon-img"
+              />
+            </div>
+            <p>{file.name}</p>
+            <p>{(file.size / 1000).toFixed(0)} KB</p>
           </div>
-          <p>{file.name}</p>
-          <p>{(file.size / 1000).toFixed(0)} KB</p>
-        </div>
-      )}
-      {isLoading && (
-        <div className="progress-bar">
-          <div style={{ width: `${progress}%` }}></div>
-        </div>
-      )}
-      {processingError && <p className="error">Error uploading file</p>}
+        )}
+        {isLoading && (
+          <div className="progress-bar">
+            <div style={{ width: `${progress}%` }}></div>
+          </div>
+        )}
+        {processingError && <p className="error">Error uploading file</p>}
+      </div>
+      <button onClick={fileUpload} className="upload-btn">
+        Analyze
+      </button>
+      <div className="error-msg">
+        {uploadFileError && <p className="error">No file Detected!!!</p>}
+        {serverError && (
+          <p className="error">Error uploading file to server!!!</p>
+        )}
+        {fileStatus && <p className="success">File Uploaded Successfully!!!</p>}
+      </div>
     </div>
   );
 };
