@@ -3,15 +3,19 @@ import { Router, response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import axios from "axios";
-import OpenAI from "openai";
+//import { GoogleGenerativeAI } from "@google/generative-ai";
+
+
 
 //router configuration and middleware
 dotenv.config();
 const router = Router();
 
-//OPEN init
+//Gemini Init
+// Access your API key as an environment variable (see "Set up your API key" above)
+// const genAI = new GoogleGenerativeAI(process.env.GEMINI_KEY);
+// const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-//const openai = new OpenAI();
 
 router.post("/chat", async (request, response) => {
   const { messages } = request.body;
@@ -20,6 +24,21 @@ router.post("/chat", async (request, response) => {
     botMessage:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   });
+  // try{
+    
+  //   const result = await model.generateContent(messages);
+  //   const response = await result.response;
+  //   const text = response.text();
+  //   console.log(text);
+  //   response.json({
+  //     botMessage:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  //   });
+
+  // }catch(error){
+  //   console.error("Error:",error);
+  //   res.status(500).json({ error: "Error, try again!" });
+  // }
   // try {
   //   // Call OpenAI's chat completion API
   //   const completion = await openai.chat.completions.create({
