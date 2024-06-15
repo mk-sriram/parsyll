@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./Message.scss";
 import assets from "../../assets";
 const Message = ({role, message}) => {
-  
+  //typing animation 
+  // const [displayedText, setDisplayedText] = useState("");
+  // const [isTyping, setIsTyping] = useState(true);
   return (
     <div
       className={

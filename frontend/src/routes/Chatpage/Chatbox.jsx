@@ -3,20 +3,23 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "./Chatbox.scss";
 import Message from "./Message";
+import { useLocation } from "react-router-dom";
 
 //functions setup 
 const Chatbox = () => {
+  //console.log("Chatbox Page called")
   //autoscorll ref div 
   const msgEnd = useRef(null); 
-
+  const location = useLocation(); 
   //state variables assignment 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
-    { role: "Assistant", content: "Assignments Exams 30september " }, //content should be initial msg to gpt 
+    { role: "Assistant", content: location.state?.initialMessage || "Sorry We were not able to parse your file, can you input schedule info seperately.. " }, //content should be initial msg to gpt 
   ]);
 
 
   //auto scroll 
+  //console.log("Input transfered from preloader ");
   useEffect(()=>{
     msgEnd.current.scrollIntoView({behavior: 'smooth'});
   }, [messages]); 
@@ -51,6 +54,8 @@ const Chatbox = () => {
       };
       setMessages((prevMessages) => [...prevMessages, errorMessage]);
     }
+
+    setMessage(""); //clear the input field ( nice trick! )
   };
 
   return (

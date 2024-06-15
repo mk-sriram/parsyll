@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import chatRouter from "./routes/chatbot.route.mjs"
 import fileuploadRouter from "./routes/fileupload.route.mjs";
+import authRouter from "./routes/auth.route.mjs"
 dotenv.config();
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(cors());
 app.use(chatRouter);
 app.use(fileuploadRouter);
+app.use(authRouter);
 
 app.get("/", (request, response) => {
   response.send("HELLOW WORLD");

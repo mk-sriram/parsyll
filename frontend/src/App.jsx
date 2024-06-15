@@ -1,12 +1,13 @@
 import { useState } from "react";
-//import Pages for router dom 
+//import Pages for router dom
 import Homepage from "./routes/Homepage/Homepage";
 import Loginpage from "./routes/Loginpage/Loginpage";
 import Layout from "./routes/layout/layout";
 import Uploadpage from "./routes/Uploadpage/Uploadpage";
 import Chatpage from "./routes/Chatpage/Chatpage";
+import Preloader from "./routes/Preloader/Preloader";
 
-//router dom setup 
+//router dom setup
 import {
   createBrowserRouter,
   RouterProvider,
@@ -37,10 +38,13 @@ function App() {
           path: "/chat",
           element: <Chatpage />,
         },
+        {
+          path: "/preloader",
+          element: <Preloader />,
+        },
       ],
     },
   ]);
-
 
   return <RouterProvider router={router} />;
 }

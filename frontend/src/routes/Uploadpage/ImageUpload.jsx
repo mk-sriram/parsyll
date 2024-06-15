@@ -1,9 +1,19 @@
+<<<<<<< Updated upstream
 import React, { useState, useRef } from "react";
+=======
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios"; // Ensure axios is imported
+>>>>>>> Stashed changes
 import "./ImageUpload.scss";
 import assets from "../../assets";
 import axios from "axios"; // Ensure axios is imported
 
+<<<<<<< Updated upstream
 const ImageUpload = () => {
+=======
+const ImageUpload = ({ name, size, getUrl, error }) => {
+  //States ( probabyl don't need some ofe these ( fix loading screen for the files ))
+>>>>>>> Stashed changes
   const [dragOver, setDragOver] = useState(false);
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
@@ -13,8 +23,20 @@ const ImageUpload = () => {
   const [serverError, setServerError] = useState(false);
   const [fileStatus, setFileStatus] = useState(false);
 
-  const fileInputRef = useRef(null);
 
+  const fileInputRef = useRef(null);
+<<<<<<< Updated upstream
+
+=======
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Clear the chat state when the component mounts
+    localStorage.removeItem("chatState");
+  }, []);
+
+>>>>>>> Stashed changes
   const handleDragOver = (event) => {
     event.preventDefault();
     setDragOver(true);
@@ -47,6 +69,7 @@ const ImageUpload = () => {
     }
   };
 
+<<<<<<< Updated upstream
   
 
   const fileUpload = async () => {
@@ -84,6 +107,59 @@ const ImageUpload = () => {
       setServerError(true);
     }
   };
+=======
+  // const redirectChatpage = () => {
+  //   navigate("/chat");
+  // };
+
+   const handleSubmit = () => {
+     if (files.length === 0) {
+       setUploadFileError(true);
+       return;
+     }
+     navigate("/preloader", { replace: true, state: { files } });
+   };
+  // const fileUpload = async () => {
+  //   if (files.length === 0) {
+  //     setUploadFileError(true);
+  //     return;
+  //   }
+
+  //   setIsLoading(true);
+  //   setProcessingError(false);
+  //   setUploadFileError(false);
+  //   setServerError(false);
+
+  //   const formData = new FormData();
+  //   files.forEach((file) => {
+  //     formData.append("files", file);
+  //   });
+
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:3000/upload",
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+
+  //     console.log("Files uploaded successfully:", response.data);
+
+  //     setIsLoading(false);
+  //     setProgress({});
+
+  //     //redirectNavigatio
+  //     redirectChatpage();
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //     setServerError(true);
+  //     setIsLoading(false);
+  //   }
+  // };
+>>>>>>> Stashed changes
 
   const handleFileSelect = (event) => {
     const files = event.target.files;
@@ -157,7 +233,15 @@ const ImageUpload = () => {
         )}
         {processingError && <p className="error">Error uploading file</p>}
       </div>
+<<<<<<< Updated upstream
       <button onClick={fileUpload} className="upload-btn">
+=======
+      <button
+        onClick={handleSubmit}
+        className="upload-btn"
+        disabled={isLoading}
+      >
+>>>>>>> Stashed changes
         Analyze
       </button>
       <div className="error-msg">

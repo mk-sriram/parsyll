@@ -21,6 +21,13 @@
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
+   .cursor {
+      display: inline-block;
+      margin-left: 2px;
+      width: 1px;
+      background-color: white;
+      animation: blink 1s step-start infinite;
+    }
 }
 .message-container-user {
   display: flex;
@@ -43,5 +50,19 @@
     background-color: #f0f4f8;
     color: #142349;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+   .cursor {
+      display: inline-block;
+      margin-left: 2px;
+      width: 1px;
+      background-color: white;
+      animation: blink 1s step-start infinite;
+    }
+}
+
+
+@keyframes blink {
+  50% {
+    opacity: 0;
   }
 }

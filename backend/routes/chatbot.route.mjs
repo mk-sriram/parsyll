@@ -21,6 +21,7 @@ router.post("/chat", async (request, response) => {
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   });
   // try {
+<<<<<<< Updated upstream
   //   console.log("Router works");
   //   // const completion = await openai.chat.completions.create({
   //   //   messages: messages,
@@ -31,6 +32,22 @@ router.post("/chat", async (request, response) => {
   // } catch (error) {
   //   console.error(error);
   //   response.status(500).json({ error: "Error, try again!" });
+=======
+  //   // Call OpenAI's chat completion API
+  //   const completion = await openai.chat.completions.create({
+  //     model: "gpt-3.5-turbo-16k",
+  //     messages: messages,
+  //     max_tokens: 150, // Set a limit to control cost and response length
+  //   });
+
+  //   // Extract the assistant's message from the response
+  //   const botMessage = completion.choices[0].message.content;
+
+  //   res.json({ botMessage });
+  // } catch (error) {
+  //   console.error("Error:", error);
+  //   res.status(500).json({ error: "Error, try again!" });
+>>>>>>> Stashed changes
   // }
 });
 
