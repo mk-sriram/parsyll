@@ -62,11 +62,14 @@ const ImageUpload = () => {
     if (validFiles.length > 0) {
       console.log(validFiles);
       setFiles((prevFiles) => [...prevFiles, ...validFiles]);
+      
       setUploadFileError(false);
     }
+    
   };
 
   const handleSubmit = () => {
+    
     if (files.length === 0) {
       setUploadFileError(true);
       return;

@@ -8,7 +8,7 @@ const Message = ({role, message}) => {
   return (
     <div
       className={
-        role === "Assistant"
+        role === "model"
           ? "message-container-bot"
           : "message-container-user"
       }
@@ -16,7 +16,7 @@ const Message = ({role, message}) => {
       {/* <img className="message-user" src={assets.profilepic} alt="" /> */}
       <div
         className={
-          role === "Assistant" ? "message-text-bot" : "message-text-user"
+          role === "model" ? "message-text-bot" : "message-text-user"
         }
       >
         <p> {message}</p>

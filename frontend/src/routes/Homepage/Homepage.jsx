@@ -2,12 +2,16 @@ import React from "react";
 import assets from "../../assets";
 import "./Homepage.scss";
 import { useNavigate } from "react-router-dom";
+import { useSession } from "@supabase/auth-helpers-react";
 const Homepage = () => {
-  const signedIn = false;  //change the value to session present logged in or not
+  const session = useSession();  //change the value to session present logged in or not
   const navigate = useNavigate(); 
 
   const navigateUpload =(e)=>{
     navigate('/upload')
+  }
+  const navigateLogin = (e) =>{
+    navigate('/login')
   }
   return (
     <div className="homepage">
@@ -17,14 +21,13 @@ const Homepage = () => {
           Syllabus To Calendar <br />
           Made Easy
         </h1>
-        {!signedIn ? (
-          <button className="google-btn">
-            <img src={assets.googleLogo} alt="Google logo" />
-            Sign in with Google
-          </button>
-        ) : (
+        {session ? (
           <button className="uploadfiles-btn" onClick={navigateUpload}>
             Upload Files
+          </button>
+        ) : (
+          <button className="uploadfiles-btn" onClick={navigateLogin}>
+            Get Started
           </button>
         )}
       </div>

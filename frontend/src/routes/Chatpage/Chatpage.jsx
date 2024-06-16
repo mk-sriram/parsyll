@@ -1,14 +1,17 @@
 import React from 'react'
 import "./Chatpage.scss"
 import Chatbox from './Chatbox'
+
+import axios from "axios";
+
 const Chatpage = () => {
+
+  
   return (
+    
     <div className="chatpage">
       <Chatbox />
-      <div className="send-calendar-container">
-        <button className="send-to-calendar-button">Send to Calendar</button>
-        <div class="loader"></div>
-      </div>
+      
     </div>
   );
 }

@@ -1,11 +1,34 @@
 import React from "react";
 import "./Loginpage.scss";
 import assets from "../../assets"
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useNavigate } from "react-router-dom";
 const Loginpage = () => {
+  const navigate = useNavigate(); 
+  const supabase = useSupabaseClient(); //talks to supabase client wemade before
+  const googleSignIn = async () =>{
+    try{
+      await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          scopes: "https://www.googleapis.com/auth/calendar",
+          
+        },
+      });
+
+
+    }catch(error){
+      alert("error Logging in to Google provider"); 
+      console.log(error);
+    }
+     
+  }
+
+
   return (
     <div className="loginpage">
       <div className="login-container">
-        <button>
+        <button onClick={googleSignIn}>
           <img
             className="google-btn"
             src={assets.googleLogo}

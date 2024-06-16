@@ -6,7 +6,7 @@ import Layout from "./routes/layout/layout";
 import Uploadpage from "./routes/Uploadpage/Uploadpage";
 import Chatpage from "./routes/Chatpage/Chatpage";
 import Preloader from "./routes/Preloader/Preloader";
-
+import ProtectedRoute from "./routes/utils/ProtectedRoute";
 //router dom setup
 import {
   createBrowserRouter,
@@ -32,15 +32,15 @@ function App() {
         },
         {
           path: "/upload",
-          element: <Uploadpage />,
+          element: <ProtectedRoute element={<Uploadpage />} />,
         },
         {
           path: "/chat",
-          element: <Chatpage />,
+          element: <ProtectedRoute element={<Chatpage />} />,
         },
         {
           path: "/preloader",
-          element: <Preloader />,
+          element: <ProtectedRoute element={<Preloader />} />,
         },
       ],
     },

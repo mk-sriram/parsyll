@@ -8,8 +8,15 @@ const Preloader = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { files } = location.state;
-  
+
   console.log(files);
+
+  //check file format
+  //convert pdf to text
+  //image send to OpenAI
+  //call openAI and get response
+  // use said rsposne and send to chat page
+  //continue chat
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,7 +57,7 @@ const Preloader = () => {
         //   replace: true,
         //   state: { initialMessage: chatResponse.data.botMessage },
         // });
-         navigate("/chat", {
+        navigate("/chat", {
           replace: true,
           state: { initialMessage: "CHANGEED INITAL MESSAGE" },
         });

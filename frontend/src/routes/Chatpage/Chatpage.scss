@@ -1,35 +1,6 @@
 .chatpage {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
   background-image: url("../../assets/background.webp");
   background-position: center;
-  height: 80vh;
 
-  .send-to-calendar-button {
 
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 20px;
-    margin-top: 20px;
-    align-self: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    background-color: #142349;
-    border-radius: 50px;
-    color: white;
-    &:hover {
-      background-color: #1d3268;
-      scale: 1.03;
-    }
-    &:active {
-      background-color: #21387574;
-    }
-  
-  }
-
-  
 }
